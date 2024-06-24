@@ -4,12 +4,10 @@ templateLiteralTypes1.ts(45,5): error TS2322: Type '{ [P in B as `p_${P}`]: T; }
     'A' is assignable to the constraint of type 'B', but 'B' could be instantiated with a different subtype of constraint 'string'.
 templateLiteralTypes1.ts(165,15): error TS1338: 'infer' declarations are only permitted in the 'extends' clause of a conditional type.
 templateLiteralTypes1.ts(197,16): error TS2590: Expression produces a union type that is too complex to represent.
-templateLiteralTypes1.ts(201,16): error TS2590: Expression produces a union type that is too complex to represent.
 templateLiteralTypes1.ts(205,16): error TS2590: Expression produces a union type that is too complex to represent.
-templateLiteralTypes1.ts(252,7): error TS2590: Expression produces a union type that is too complex to represent.
 
 
-==== templateLiteralTypes1.ts (7 errors) ====
+==== templateLiteralTypes1.ts (5 errors) ====
     // Template types example from #12754
     
     const createScopedActionType = <S extends string>(scope: S) => <T extends string>(type: T) => `${scope}/${type}` as `${S}/${T}`;
@@ -221,9 +219,7 @@ templateLiteralTypes1.ts(252,7): error TS2590: Expression produces a union type 
     
     type Digits = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
     
-    type D100000 = `${Digits}${Digits}${Digits}${Digits}${Digits}`;  // Error
-                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2590: Expression produces a union type that is too complex to represent.
+    type D100000 = `${Digits}${Digits}${Digits}${Digits}${Digits}`;
     
     type TDigits = [0] | [1] | [2] | [3] | [4] | [5] | [6] | [7] | [8] | [9];
     
@@ -277,8 +273,6 @@ templateLiteralTypes1.ts(252,7): error TS2590: Expression produces a union type 
         | `${Spacing} ${Spacing}`
         | `${Spacing} ${Spacing} ${Spacing}`
         | `${Spacing} ${Spacing} ${Spacing} ${Spacing}`;
-          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-!!! error TS2590: Expression produces a union type that is too complex to represent.
     
     const test1: SpacingShorthand = "0 0 0";
     

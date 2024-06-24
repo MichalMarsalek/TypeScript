@@ -829,7 +829,7 @@ type U100000 = U1 & U2 & U3 & U4 & U5;  // Error
 type Digits = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 >Digits : Symbol(Digits, Decl(templateLiteralTypes1.ts, 196, 38))
 
-type D100000 = `${Digits}${Digits}${Digits}${Digits}${Digits}`;  // Error
+type D100000 = `${Digits}${Digits}${Digits}${Digits}${Digits}`;
 >D100000 : Symbol(D100000, Decl(templateLiteralTypes1.ts, 198, 52))
 >Digits : Symbol(Digits, Decl(templateLiteralTypes1.ts, 196, 38))
 >Digits : Symbol(Digits, Decl(templateLiteralTypes1.ts, 196, 38))

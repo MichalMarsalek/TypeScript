@@ -201,7 +201,7 @@ type U100000 = U1 & U2 & U3 & U4 & U5;  // Error
 
 type Digits = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
-type D100000 = `${Digits}${Digits}${Digits}${Digits}${Digits}`;  // Error
+type D100000 = `${Digits}${Digits}${Digits}${Digits}${Digits}`;
 
 type TDigits = [0] | [1] | [2] | [3] | [4] | [5] | [6] | [7] | [8] | [9];
 

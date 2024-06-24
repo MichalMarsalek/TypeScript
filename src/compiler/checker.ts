@@ -18349,10 +18349,8 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
 
     function getTemplateLiteralType(texts: readonly string[], types: readonly Type[]): Type {
         const unionIndex = findIndex(types, t => !!(t.flags & (TypeFlags.Never | TypeFlags.Union)));
-        if (unionIndex >= 0) {
-            return checkCrossProductUnion(types) ?
-                mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t))) :
-                errorType;
+        if (unionIndex >= 0 && getCrossProductUnionSize(types) < 100000) {
+            return mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t)));
         }
         if (contains(types, wildcardType)) {
             return wildcardType;
@@ -18395,13 +18393,10 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
                     if (!addSpans((t as TemplateLiteralType).texts, (t as TemplateLiteralType).types)) return false;
                     text += texts[i + 1];
                 }
-                else if (isGenericIndexType(t) || isPatternLiteralPlaceholderType(t)) {
+                else {
                     newTypes.push(t);
                     newTexts.push(text);
                     text = texts[i + 1];
-                }
-                else {
-                    return false;
                 }
             }
             return true;
