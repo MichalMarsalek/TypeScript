@@ -25839,6 +25839,9 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
         if (target.flags & TypeFlags.Intersection) {
             return every((target as IntersectionType).types, t => t === emptyTypeLiteralType || isValidTypeForTemplateLiteralPlaceholder(source, t));
         }
+        if (target.flags & TypeFlags.Union) {
+            return some((target as UnionType).types, t => isValidTypeForTemplateLiteralPlaceholder(source, t));
+        }
         if (target.flags & TypeFlags.String || isTypeAssignableTo(source, target)) {
             return true;
         }
@@ -25847,6 +25850,7 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
             return !!(target.flags & TypeFlags.Number && isValidNumberString(value, /*roundTripOnly*/ false) ||
                 target.flags & TypeFlags.BigInt && isValidBigIntString(value, /*roundTripOnly*/ false) ||
                 target.flags & (TypeFlags.BooleanLiteral | TypeFlags.Nullable) && value === (target as IntrinsicType).intrinsicName ||
+                target.flags & TypeFlags.Literal && value === getTemplateStringForType(target) ||
                 target.flags & TypeFlags.StringMapping && isMemberOfStringMapping(getStringLiteralType(value), target) ||
                 target.flags & TypeFlags.TemplateLiteral && isTypeMatchedByTemplateLiteralType(source, target as TemplateLiteralType));
         }

@@ -1,0 +1,66 @@
+//// [tests/cases/conformance/types/literal/templateLiteralTypes9.ts] ////
+
+=== templateLiteralTypes9.ts ===
+type N = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+
+type LazyTemplateLiteralType1 = `${N}_${N}_${N}_${N}_${N}${N}_${N}`;
+>LazyTemplateLiteralType1 : Symbol(LazyTemplateLiteralType1, Decl(templateLiteralTypes9.ts, 0, 47))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+
+const x: LazyTemplateLiteralType1 = "1_2_3";
+>x : Symbol(x, Decl(templateLiteralTypes9.ts, 4, 5))
+>LazyTemplateLiteralType1 : Symbol(LazyTemplateLiteralType1, Decl(templateLiteralTypes9.ts, 0, 47))
+
+const y: LazyTemplateLiteralType1 = "1_2_3_4_55_6";
+>y : Symbol(y, Decl(templateLiteralTypes9.ts, 5, 5))
+>LazyTemplateLiteralType1 : Symbol(LazyTemplateLiteralType1, Decl(templateLiteralTypes9.ts, 0, 47))
+
+type ExtractSecondDigit<T extends LazyTemplateLiteralType1> = T extends `${N}_${infer Result}_${N}_${N}_${N}${N}_${N}` ? Result : never;
+>ExtractSecondDigit : Symbol(ExtractSecondDigit, Decl(templateLiteralTypes9.ts, 5, 51))
+>T : Symbol(T, Decl(templateLiteralTypes9.ts, 7, 24))
+>LazyTemplateLiteralType1 : Symbol(LazyTemplateLiteralType1, Decl(templateLiteralTypes9.ts, 0, 47))
+>T : Symbol(T, Decl(templateLiteralTypes9.ts, 7, 24))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>Result : Symbol(Result, Decl(templateLiteralTypes9.ts, 7, 85))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>Result : Symbol(Result, Decl(templateLiteralTypes9.ts, 7, 85))
+
+type ExtractedSecondDigit = ExtractSecondDigit<"1_2_3_4_55_6"> // "2"
+>ExtractedSecondDigit : Symbol(ExtractedSecondDigit, Decl(templateLiteralTypes9.ts, 7, 136))
+>ExtractSecondDigit : Symbol(ExtractSecondDigit, Decl(templateLiteralTypes9.ts, 5, 51))
+
+"3" satisfies ExtractedSecondDigit // error
+>ExtractedSecondDigit : Symbol(ExtractedSecondDigit, Decl(templateLiteralTypes9.ts, 7, 136))
+
+"2" satisfies ExtractedSecondDigit // correct
+>ExtractedSecondDigit : Symbol(ExtractedSecondDigit, Decl(templateLiteralTypes9.ts, 7, 136))
+
+type PartExt = '-sunny' | '-rainy' | '-snowy' | '-cloudy' | '-foggy' | '-dark' // ...
+>PartExt : Symbol(PartExt, Decl(templateLiteralTypes9.ts, 10, 34))
+
+type PartVar = '-var1' | '-var2' | '-var3' | '-var4' | '-var5' | '-var6' | '-var7' | '-var8' | ''
+>PartVar : Symbol(PartVar, Decl(templateLiteralTypes9.ts, 12, 78))
+
+type PartSpecial = '-special' | ''
+>PartSpecial : Symbol(PartSpecial, Decl(templateLiteralTypes9.ts, 13, 97))
+
+type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`
+>TypeItem : Symbol(TypeItem, Decl(templateLiteralTypes9.ts, 14, 34))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>N : Symbol(N, Decl(templateLiteralTypes9.ts, 0, 0))
+>PartExt : Symbol(PartExt, Decl(templateLiteralTypes9.ts, 10, 34))
+>PartVar : Symbol(PartVar, Decl(templateLiteralTypes9.ts, 12, 78))
+>PartSpecial : Symbol(PartSpecial, Decl(templateLiteralTypes9.ts, 13, 97))
+
