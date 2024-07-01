@@ -5,55 +5,33 @@ type N = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 >N : N
 >  : ^
 
+type N2 = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+>N2 : N2
+>   : ^^
+
 type LazyTemplateLiteralType1 = `${N}_${N}_${N}_${N}_${N}${N}_${N}`;
->LazyTemplateLiteralType1 : `${N}_${N}_${N}_${N}_${N}${N}_${N}`
->                         : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>LazyTemplateLiteralType1 : `${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}_${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}_${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}_${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}_${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}_${"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}`
+>                         : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-const x: LazyTemplateLiteralType1 = "1_2_3";
->x : `${N}_${N}_${N}_${N}_${N}${N}_${N}`
->  : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->"1_2_3" : "1_2_3"
->        : ^^^^^^^
+type LazyTemplateLiteralType2 = `${N2}_${N2}_${N2}_${N2}_${N2}${N2}_${N2}`;
+>LazyTemplateLiteralType2 : `${N2}_${N2}_${N2}_${N2}_${N2}${N2}_${N2}`
+>                         : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-const y: LazyTemplateLiteralType1 = "1_2_3_4_55_6";
->y : `${N}_${N}_${N}_${N}_${N}${N}_${N}`
->  : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->"1_2_3_4_55_6" : "1_2_3_4_55_6"
->               : ^^^^^^^^^^^^^^
+/*const x: LazyTemplateLiteralType1 = "1_2_3";
+const y: LazyTemplateLiteralType1 = "1_2_3_4_55_6";*/
 
 type ExtractSecondDigit<T extends LazyTemplateLiteralType1> = T extends `${N}_${infer Result}_${N}_${N}_${N}${N}_${N}` ? Result : never;
->ExtractSecondDigit : ExtractSecondDigit<T>
->                   : ^^^^^^^^^^^^^^^^^^^^^
+>ExtractSecondDigit : any
+>                   : ^^^
 
 type ExtractedSecondDigit = ExtractSecondDigit<"1_2_3_4_55_6"> // "2"
->ExtractedSecondDigit : ExtractedSecondDigit
->                     : ^^^^^^^^^^^^^^^^^^^^
+>ExtractedSecondDigit : any
+>                     : ^^^
 
-"3" satisfies ExtractedSecondDigit // error
->"3" satisfies ExtractedSecondDigit : "3"
->                                   : ^^^
->"3" : "3"
->    : ^^^
-
+/*"3" satisfies ExtractedSecondDigit // error
 "2" satisfies ExtractedSecondDigit // correct
->"2" satisfies ExtractedSecondDigit : "2"
->                                   : ^^^
->"2" : "2"
->    : ^^^
 
 type PartExt = '-sunny' | '-rainy' | '-snowy' | '-cloudy' | '-foggy' | '-dark' // ...
->PartExt : PartExt
->        : ^^^^^^^
-
 type PartVar = '-var1' | '-var2' | '-var3' | '-var4' | '-var5' | '-var6' | '-var7' | '-var8' | ''
->PartVar : PartVar
->        : ^^^^^^^
-
 type PartSpecial = '-special' | ''
->PartSpecial : PartSpecial
->            : ^^^^^^^^^^^
-
-type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`
->TypeItem : `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`
->         : ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`*/

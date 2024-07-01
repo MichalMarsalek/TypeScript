@@ -18349,8 +18349,15 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
 
     function getTemplateLiteralType(texts: readonly string[], types: readonly Type[]): Type {
         const unionIndex = findIndex(types, t => !!(t.flags & (TypeFlags.Never | TypeFlags.Union)));
-        if (unionIndex >= 0 && getCrossProductUnionSize(types) < 100000) {
-            return mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t)));
+        if (unionIndex >= 0){
+            if (getCrossProductUnionSize(types) < 100000) {
+                return mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t)));
+            }
+            if (some(types, t => !(t.flags & TypeFlags.Union) || (t as UnionType).types
+                .some(t2 => !(t2.flags & (TypeFlags.Literal | TypeFlags.Null | TypeFlags.Undefined))))){
+                checkCrossProductUnion(types)
+                return errorType
+            }
         }
         if (contains(types, wildcardType)) {
             return wildcardType;
@@ -18394,7 +18401,12 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
                     text += texts[i + 1];
                 }
                 else {
-                    newTypes.push(t);
+                    if (t.flags && TypeFlags.Union){
+                        newTypes.push(mapType(t, t => getStringLiteralType(getTemplateStringForType(t) || "")));
+                    }
+                    else{
+                        newTypes.push(t);
+                    }
                     newTexts.push(text);
                     text = texts[i + 1];
                 }
