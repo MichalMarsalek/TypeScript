@@ -18353,7 +18353,7 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
             if (getCrossProductUnionSize(types) < 100000) {
                 return mapType(types[unionIndex], t => getTemplateLiteralType(texts, replaceElement(types, unionIndex, t)));
             }
-            if (some(types, t => !(t.flags & TypeFlags.Union) || (t as UnionType).types
+            if (some(types, t => !!(t.flags & TypeFlags.Union) && (t as UnionType).types
                 .some(t2 => !(t2.flags & (TypeFlags.Literal | TypeFlags.Null | TypeFlags.Undefined))))){
                 checkCrossProductUnion(types)
                 return errorType
