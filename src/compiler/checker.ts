@@ -18401,7 +18401,7 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
                     text += texts[i + 1];
                 }
                 else {
-                    if (t.flags && TypeFlags.Union){
+                    if (t.flags & TypeFlags.Union){
                         newTypes.push(mapType(t, t => getStringLiteralType(getTemplateStringForType(t) || "")));
                     }
                     else{

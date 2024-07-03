@@ -12,23 +12,18 @@ const y: LazyTemplateLiteralType1 = "1_2_3_4_55_6";*/
 
 type ExtractSecondDigit<T extends LazyTemplateLiteralType1> = T extends `${N}_${infer Result}_${N}_${N}_${N}${N}_${N}` ? Result : never;
 type ExtractedSecondDigit = ExtractSecondDigit<"1_2_3_4_55_6"> // "2"
-/*"3" satisfies ExtractedSecondDigit // error
+"3" satisfies ExtractedSecondDigit // error
 "2" satisfies ExtractedSecondDigit // correct
 
 type PartExt = '-sunny' | '-rainy' | '-snowy' | '-cloudy' | '-foggy' | '-dark' // ...
 type PartVar = '-var1' | '-var2' | '-var3' | '-var4' | '-var5' | '-var6' | '-var7' | '-var8' | ''
 type PartSpecial = '-special' | ''
-type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`*/
+type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`
 
 //// [templateLiteralTypes9.js]
 "use strict";
-/*"3" satisfies ExtractedSecondDigit // error
-"2" satisfies ExtractedSecondDigit // correct
-
-type PartExt = '-sunny' | '-rainy' | '-snowy' | '-cloudy' | '-foggy' | '-dark' // ...
-type PartVar = '-var1' | '-var2' | '-var3' | '-var4' | '-var5' | '-var6' | '-var7' | '-var8' | ''
-type PartSpecial = '-special' | ''
-type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`*/ 
+"3"; // error
+"2"; // correct
 
 
 //// [templateLiteralTypes9.d.ts]
@@ -38,3 +33,7 @@ type LazyTemplateLiteralType1 = `${N}_${N}_${N}_${N}_${N}${N}_${N}`;
 type LazyTemplateLiteralType2 = `${N2}_${N2}_${N2}_${N2}_${N2}${N2}_${N2}`;
 type ExtractSecondDigit<T extends LazyTemplateLiteralType1> = T extends `${N}_${infer Result}_${N}_${N}_${N}${N}_${N}` ? Result : never;
 type ExtractedSecondDigit = ExtractSecondDigit<"1_2_3_4_55_6">;
+type PartExt = '-sunny' | '-rainy' | '-snowy' | '-cloudy' | '-foggy' | '-dark';
+type PartVar = '-var1' | '-var2' | '-var3' | '-var4' | '-var5' | '-var6' | '-var7' | '-var8' | '';
+type PartSpecial = '-special' | '';
+type TypeItem = `item-${N}${N}${N}${PartExt}${PartVar}${PartSpecial}`;
