@@ -5,9 +5,10 @@ templateLiteralTypes1.ts(45,5): error TS2322: Type '{ [P in B as `p_${P}`]: T; }
 templateLiteralTypes1.ts(165,15): error TS1338: 'infer' declarations are only permitted in the 'extends' clause of a conditional type.
 templateLiteralTypes1.ts(197,16): error TS2590: Expression produces a union type that is too complex to represent.
 templateLiteralTypes1.ts(205,16): error TS2590: Expression produces a union type that is too complex to represent.
+templateLiteralTypes1.ts(252,7): error TS2590: Expression produces a union type that is too complex to represent.
 
 
-==== templateLiteralTypes1.ts (5 errors) ====
+==== templateLiteralTypes1.ts (6 errors) ====
     // Template types example from #12754
     
     const createScopedActionType = <S extends string>(scope: S) => <T extends string>(type: T) => `${scope}/${type}` as `${S}/${T}`;
@@ -273,6 +274,8 @@ templateLiteralTypes1.ts(205,16): error TS2590: Expression produces a union type
         | `${Spacing} ${Spacing}`
         | `${Spacing} ${Spacing} ${Spacing}`
         | `${Spacing} ${Spacing} ${Spacing} ${Spacing}`;
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!!! error TS2590: Expression produces a union type that is too complex to represent.
     
     const test1: SpacingShorthand = "0 0 0";
     

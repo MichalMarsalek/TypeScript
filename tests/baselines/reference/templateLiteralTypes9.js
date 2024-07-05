@@ -10,6 +10,8 @@ type LazyTemplateLiteralType2 = `${N2}_${N2}_${N2}_${N2}_${N2}${N2}_${N2}`;
 /*const x: LazyTemplateLiteralType1 = "1_2_3";
 const y: LazyTemplateLiteralType1 = "1_2_3_4_55_6";*/
 
+//type ExtractedSecondDigit0 = "1_2_3_4_55_6" extends `${N}_${infer Result}_${N}_${N}_${N}${N}_${N}` ? Result : never;  // "2"
+
 type ExtractSecondDigit<T extends LazyTemplateLiteralType1> = T extends `${N}_${infer Result}_${N}_${N}_${N}${N}_${N}` ? Result : never;
 type ExtractedSecondDigit = ExtractSecondDigit<"1_2_3_4_55_6"> // "2"
 "3" satisfies ExtractedSecondDigit // error

@@ -18762,6 +18762,9 @@ export function createTypeChecker(host: TypeCheckerHost): TypeChecker {
             }
             return seenPlaceholder;
         }
+        if (type.flags & TypeFlags.Union && every((type as UnionType).types, t => !!(t.flags & TypeFlags.StringLiteral))){
+            return true;
+        }
         return !!(type.flags & (TypeFlags.Any | TypeFlags.String | TypeFlags.Number | TypeFlags.BigInt)) || isPatternLiteralType(type);
     }
 
